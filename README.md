@@ -36,7 +36,9 @@ Contact
 For any questions or feedback, please contact:
 
 Email: your-rakshithacg045.com
-GitHub: your-https://github.com/RakshithaShetty26/distance_converter-python)
+GitHub: your-https://github.com/RakshithaShetty26/distance_converter-python
+
+
 Acknowledgements
 PyScript Team: For making it possible to run Python in the browser.
 Bootstrap: For providing a great framework for responsive design. 
