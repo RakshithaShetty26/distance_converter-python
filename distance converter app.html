@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance Converter</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Distance Converter</h1>
+        <form id="converter-form">
+            <div>
+                <label for="distance">Distance:</label>
+                <input type="text" id="distance" name="distance" required>
+            </div>
+            <div>
+                <label for="unit">Unit (K for kms, M for miles):</label>
+                <input type="text" id="unit" name="unit" required>
+            </div>
+            <div>
+                <button type="submit">Convert</button>
+            </div>
+        </form>
+        <div class="result" id="result"></div>
+    </div>  
+    <py-script>
+        from pyodide.ffi import create_proxy
+        from js import document
+
+        def convert_distance(distance, unit):
+            if unit.upper() == "K":
+                return distance / 1.609
+            elif unit.upper() == "M":
+                return distance * 1.609
+            else:
+                return "Wrong input"
+
+        def handle_submit(event):
+            event.preventDefault()
+            distance = float(document.getElementById('distance').value)
+            unit = document.getElementById('unit').value
+            result = convert_distance(distance, unit)
+            result_text = f"Converted distance: {result:.2f} {'miles' if unit.upper() == 'K' else 'kms'}"
+            document.getElementById('result').innerText = result_text
+
+        form = document.getElementById('converter-form')
+        form.addEventListener('submit', create_proxy(handle_submit))
+    </py-script>
+</body>
+</html>
